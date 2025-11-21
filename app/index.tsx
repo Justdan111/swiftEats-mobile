@@ -55,14 +55,14 @@ export default function SplashScreen() {
           transform: [{ scale: logoScale }]
         }}
       >
-       {/* <Image
-            source={require('../assets/images/tradewise-logo.png')}
-            className="w-30 h-18"
-          /> */}
+       <Image
+            source={require('../assets/images/swifteat.png')}
+            className="w-40 h-20 object-contain"
+          />
       </Animated.View>
       
-      <View className="items-center justify-center gap-3">
-        <Text className="text-4xl font-extrabold">SwiftEats</Text>
+      <View className="items-center justify-center">
+        {/* <Text className="text-4xl font-extrabold">SwiftEats</Text> */}
         <Text className="text-lg">Your next meal, moments away</Text>
       </View>
 
