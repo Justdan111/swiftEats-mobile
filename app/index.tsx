@@ -16,7 +16,7 @@ export default function SplashScreen() {
     Animated.parallel([
       Animated.timing(logoOpacity, {
         toValue: 1,
-        duration: 1000,
+        duration: 3000,
         useNativeDriver: true,
         easing: Easing.out(Easing.ease)
       }),
