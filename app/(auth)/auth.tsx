@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { View, Text, TextInput, TouchableOpacity, ScrollView } from "react-native";
+import { View, Text, TextInput, TouchableOpacity } from "react-native";
 import { StatusBar } from "expo-status-bar";
-import { Ionicons, MaterialIcons, AntDesign } from '@expo/vector-icons';
+import { Ionicons, MaterialIcons, AntDesign, FontAwesome } from '@expo/vector-icons';
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useRouter } from "expo-router"
 
@@ -145,12 +145,12 @@ const Auth = () => {
             </TouchableOpacity>
 
             <TouchableOpacity className="h-14 w-full rounded-2xl border-2 border-gray-300 bg-white items-center justify-center flex-row mb-4">
-              <AntDesign name="facebook-square" size={20} color="#1877F2" />
+              <FontAwesome name="facebook-square" size={20} color="#1877F2" />
               <Text className="ml-2 text-base font-medium text-gray-900">Continue with Facebook</Text>
             </TouchableOpacity>
 
             <TouchableOpacity className="h-14 w-full rounded-2xl border-2 border-gray-300 bg-white items-center justify-center flex-row mb-4">
-              <AntDesign name="apple1" size={20} color="#000" />
+               <FontAwesome name="apple" size={20} color="#000" />
               <Text className="ml-2 text-base font-medium text-gray-900">Continue with Apple</Text>
             </TouchableOpacity>
           </View>

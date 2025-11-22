@@ -37,6 +37,7 @@ const restaurants = [
     time: "15-20 min",
     cuisine: "Healthy, Salads",
     image: require("@/assets/images/salad.jpeg"),
+
   },
 ];
 

@@ -65,7 +65,6 @@ export default function RestaurantDetail() {
   const slideAnims = useRef(menuItems.map(() => new Animated.Value(50))).current;
 
   useEffect(() => {
-    //Reset animation
     fadeAnims.forEach(anim => anim.setValue(0));
     slideAnims.forEach(anim => anim.setValue(50));
 
