@@ -12,7 +12,7 @@ export default function SplashScreen() {
   const loadingWidth = useRef(new Animated.Value(0)).current
 
   useEffect(() => {
-    // Logo animation - fade in and scale up
+    // Logo animation 
     Animated.parallel([
       Animated.timing(logoOpacity, {
         toValue: 1,
@@ -28,7 +28,7 @@ export default function SplashScreen() {
       })
     ]).start()
 
-    // Loading bar animation (5 seconds)
+    // Loading bar animation
     Animated.timing(loadingWidth, {
       toValue: 1,
       duration: 5000,
@@ -36,7 +36,7 @@ export default function SplashScreen() {
       easing: Easing.linear
     }).start()
 
-    // Navigate to login after 5 seconds
+    
     const timer = setTimeout(() => {
       router.replace("/auth")
     }, 5000)
