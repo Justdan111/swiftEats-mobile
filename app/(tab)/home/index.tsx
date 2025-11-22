@@ -4,7 +4,7 @@ import React from 'react'
 export default function HomeScreen() {
   return (
     <View>
-      <Text>HomeScreen</Text>
+      <Text className='bg-orange-400'>HomeScreen</Text>
     </View>
   )
 }
