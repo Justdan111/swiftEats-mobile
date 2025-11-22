@@ -40,9 +40,16 @@ export default function OrderTakerLayout() {
       },
     },
     {
-      name: "order/index",
+      name: "orders/index",
       options: {
         title: "Orders",
+        tabBarIcon: ({ color, size }: TabBarIconProps) => <Sparkle  size={size} color={color} />,
+      },
+    },
+    {
+      name: "cart/index",
+      options: {
+        title: "Cart",
         tabBarIcon: ({ color, size }: TabBarIconProps) => <Sparkle  size={size} color={color} />,
       },
     },
