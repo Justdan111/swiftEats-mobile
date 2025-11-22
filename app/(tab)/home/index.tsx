@@ -71,7 +71,7 @@ export default function HomeScreen() {
 
   return (
     <SafeAreaView className="flex-1 bg-white ">
-      <StatusBar style="dark" />
+      {/* <StatusBar style="dark" /> */}
 
       {/* Header */}
      <View className="bg-white  border-gray-200 px-6  pb-2">
@@ -148,7 +148,7 @@ export default function HomeScreen() {
               }}
             >
               <TouchableOpacity
-                onPress={() => router.push(`/restaurant/${restaurant.id}`)}
+                onPress={() => router.push(`/home/restaurant/${restaurant.id}`)}
                 activeOpacity={0.9}
                 className="mb-6"
               >

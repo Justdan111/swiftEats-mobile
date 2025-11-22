@@ -64,13 +64,7 @@ export default function OrderTakerLayout() {
 
   // Define hidden screens (not in tab bar)
   const hiddenScreens: string[] = [
-   "home/add-item/index",
-   "home/product/[id]",
-   "order/create-order/index",
-   "order/order-detail/[id]",
-   "order/client-info/index",
-   "order/add-products/index",
-   "order/invoice/[id]"
+    "home/restaurant/[id]",
   ];
 
   return (
