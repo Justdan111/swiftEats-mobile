@@ -1,4 +1,4 @@
-import { View, Text, Animated, StatusBar, TouchableOpacity, TextInput, ScrollView } from 'react-native'
+import { View, Text, Animated, StatusBar, TouchableOpacity, TextInput, ScrollView, Image } from 'react-native'
 import React, { useEffect, useRef, useState } from 'react'
 import { useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -83,8 +83,11 @@ export default function HomeScreen() {
               <Text className="text-2xl font-bold ">Delivering to: Home</Text>
             </View>
           </View>
-          <TouchableOpacity className="w-10 h-10 rounded-full items-center justify-center">
-            <Ionicons name="person-outline" size={20} color="#000" />
+          <TouchableOpacity onPress={() => router.push('/profile')} className="w-10 h-10 rounded-full items-center justify-center">
+            <Image
+              source={require('@/assets/images/avatar.jpg')}
+              className="w-12 h-10 rounded-full"
+            />
           </TouchableOpacity>
         </View>
        
