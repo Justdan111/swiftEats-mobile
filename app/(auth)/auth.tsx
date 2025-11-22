@@ -3,9 +3,15 @@ import { View, Text, TextInput, TouchableOpacity, ScrollView } from "react-nativ
 import { StatusBar } from "expo-status-bar";
 import { Ionicons, MaterialIcons, AntDesign } from '@expo/vector-icons';
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useRouter } from "expo-router"
 
 const Auth = () => {
+   const router = useRouter()
   const [isSignUp, setIsSignUp] = useState(true);
+
+  const handleLogin = () => { 
+    router.push('/(tab)/home')
+  }
 
   return (
     < SafeAreaView className="flex-1 bg-white">
@@ -112,7 +118,7 @@ const Auth = () => {
                   />
                 </View>
 
-                <TouchableOpacity className="h-14 w-full rounded-2xl bg-orange-500 items-center justify-center mb-4">
+                <TouchableOpacity onPress={handleLogin} className="h-14 w-full rounded-2xl bg-orange-500 items-center justify-center mb-4">
                   <Text className="text-base font-semibold text-white">Log In</Text>
                 </TouchableOpacity>
 

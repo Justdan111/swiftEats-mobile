@@ -1,6 +1,6 @@
 import React from "react";
 import { Tabs } from "expo-router";
-import { Annoyed, HomeIcon, Sparkle } from "lucide-react-native";
+import { Annoyed, HomeIcon, ShoppingBag, ShoppingCart, Sparkle } from "lucide-react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 
@@ -43,14 +43,14 @@ export default function OrderTakerLayout() {
       name: "orders/index",
       options: {
         title: "Orders",
-        tabBarIcon: ({ color, size }: TabBarIconProps) => <Sparkle  size={size} color={color} />,
+        tabBarIcon: ({ color, size }: TabBarIconProps) => <ShoppingBag  size={size} color={color} />,
       },
     },
     {
       name: "cart/index",
       options: {
         title: "Cart",
-        tabBarIcon: ({ color, size }: TabBarIconProps) => <Sparkle  size={size} color={color} />,
+        tabBarIcon: ({ color, size }: TabBarIconProps) => <ShoppingCart  size={size} color={color} />,
       },
     },
     {
