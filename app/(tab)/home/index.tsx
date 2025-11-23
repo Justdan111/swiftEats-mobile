@@ -4,53 +4,129 @@ import { useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Ionicons from '@expo/vector-icons/build/Ionicons';
 
-// Mock data
-const restaurants = [
-  {
-    id: 1,
-    name: "The Great Italian Pasta",
-    rating: 4.5,
-    time: "15-25 min",
-    cuisine: "Italian, Pasta",
-    image: require("@/assets/images/pasta.jpeg"),
-  },
-  {
-    id: 2,
-    name: "Sushi World",
-    rating: 4.8,
-    time: "20-30 min",
-    cuisine: "Japanese, Sushi",
-    image: require("@/assets/images/sushi.jpeg"),
-  },
-  {
-    id: 3,
-    name: "Burger Palace",
-    rating: 4.3,
-    time: "10-20 min",
-    cuisine: "American, Burgers",
-    image: require("@/assets/images/burger.jpeg"),
-  },
-  {
-    id: 4,
-    name: "Green Leaf Salads",
-    rating: 4.9,
-    time: "15-20 min",
-    cuisine: "Healthy, Salads",
-    image: require("@/assets/images/salad.jpeg"),
+// Mock data - organized by category
+type Restaurant = {
+  id: number;
+  name: string;
+  rating: number;
+  time: string;
+  cuisine: string;
+  image: any;
+  offer?: string;
+};
 
-  },
-];
+type RestaurantsMap = {
+  Pizza: Restaurant[];
+  Sushi: Restaurant[];
+  Burgers: Restaurant[];
+  Healthy: Restaurant[];
+  Offers: Restaurant[];
+};
 
-const categories = ["All Filters", "Pizza", "Sushi", "Offers", "Burgers", "Healthy"];
+const allRestaurants: RestaurantsMap = {
+  Pizza: [
+    {
+      id: 1,
+      name: "The Great Italian Pasta",
+      rating: 4.5,
+      time: "15-25 min",
+      cuisine: "Italian, Pasta",
+      image: require("@/assets/images/pasta.jpeg"),
+      offer: "20% OFF",
+    },
+    {
+      id: 5,
+      name: "Pizza Paradise",
+      rating: 4.7,
+      time: "20-30 min",
+      cuisine: "Italian, Pizza",
+      image: require("@/assets/images/pizza.jpeg"),
+      offer: "15% OFF",
+    },
+  ],
+  Sushi: [
+    {
+      id: 2,
+      name: "Sushi World",
+      rating: 4.8,
+      time: "20-30 min",
+      cuisine: "Japanese, Sushi",
+      image: require("@/assets/images/sushi.jpeg"),
+      offer: "10% OFF",
+    },
+  ],
+  Burgers: [
+    {
+      id: 3,
+      name: "Burger Palace",
+      rating: 4.3,
+      time: "10-20 min",
+      cuisine: "American, Burgers",
+      image: require("@/assets/images/burger.jpeg"),
+      offer: "15% OFF",
+    },
+  ],
+  Healthy: [
+    {
+      id: 4,
+      name: "Green Leaf Salads",
+      rating: 4.9,
+      time: "15-20 min",
+      cuisine: "Healthy, Salads",
+      image: require("@/assets/images/salad.jpeg"),
+      offer: "Buy 1 Get 1",
+    },
+  ],
+  Offers: [
+    {
+      id: 1,
+      name: "The Great Italian Pasta",
+      rating: 4.5,
+      time: "15-25 min",
+      cuisine: "Italian, Pasta",
+      image: require("@/assets/images/pasta.jpeg"),
+      offer: "20% OFF",
+    },
+    {
+      id: 4,
+      name: "Green Leaf Salads",
+      rating: 4.9,
+      time: "15-20 min",
+      cuisine: "Healthy, Salads",
+      image: require("@/assets/images/salad.jpeg"),
+      offer: "Buy 1 Get 1",
+    },
+  ],
+};
+
+type Category = keyof RestaurantsMap; 
+type SelectedCategory = Category | "All Filters";
+
+const categories: SelectedCategory[] = ["All Filters", "Pizza", "Sushi", "Offers", "Burgers", "Healthy"];
 
 export default function HomeScreen() {
-    const router = useRouter();
-  const [selectedCategory, setSelectedCategory] = useState("Pizza");
-  const fadeAnims = useRef(restaurants.map(() => new Animated.Value(0))).current;
-  const slideAnims = useRef(restaurants.map(() => new Animated.Value(50))).current;
+  const router = useRouter();
+  const [selectedCategory, setSelectedCategory] = useState<SelectedCategory>("Pizza");
+  const [displayedRestaurants, setDisplayedRestaurants] = useState<Restaurant[]>(allRestaurants.Pizza);
+  const fadeAnims = useRef([...Array(10)].map(() => new Animated.Value(0))).current;
+  const slideAnims = useRef([...Array(10)].map(() => new Animated.Value(50))).current;
 
   useEffect(() => {
-    const animations = restaurants.map((_, index) =>
+    // Reset animations
+    fadeAnims.forEach(anim => anim.setValue(0));
+    slideAnims.forEach(anim => anim.setValue(50));
+
+    // Update displayed restaurants based on selected category
+    if (selectedCategory === "All Filters") {
+      const all = (Object.values(allRestaurants) as Restaurant[][]).flat();
+      setDisplayedRestaurants(all);
+    } else {
+      setDisplayedRestaurants(allRestaurants[selectedCategory as Category] || []);
+    }
+  }, [selectedCategory, fadeAnims, slideAnims]);
+
+  useEffect(() => {
+    const animations = displayedRestaurants.map((_, index) =>
       Animated.parallel([
         Animated.timing(fadeAnims[index], {
           toValue: 1,
@@ -68,14 +144,12 @@ export default function HomeScreen() {
     );
 
     Animated.stagger(100, animations).start();
-  }, []);
+  }, [displayedRestaurants, fadeAnims, slideAnims]);
 
   return (
     <SafeAreaView className="flex-1 bg-white ">
-      {/* <StatusBar style="dark" /> */}
-
       {/* Header */}
-     <View className="bg-white  border-gray-200 px-6  pb-2">
+      <View className="bg-white border-gray-200 px-6 pb-2">
         <View className="flex-row items-center justify-between mb-4">
           <View className="flex-row items-center gap-2">
             <Ionicons name="location" size={20} color="#f97316" />
@@ -90,9 +164,8 @@ export default function HomeScreen() {
             />
           </TouchableOpacity>
         </View>
-       
 
-         {/* Search Bar */}
+        {/* Search Bar */}
         <View className="relative mb-4">
           <View className="absolute left-4 top-1/2 z-10" style={{ transform: [{ translateY: -10 }] }}>
             <Ionicons name="search" size={20} color="#6B7280" />
@@ -104,7 +177,7 @@ export default function HomeScreen() {
           />
         </View>
 
-          {/* Category Filters */}
+        {/* Category Filters */}
         <ScrollView horizontal showsHorizontalScrollIndicator={false} className="pb-2">
           <View className="flex-row gap-2">
             {categories.map((category) => (
@@ -139,51 +212,65 @@ export default function HomeScreen() {
         </ScrollView>
       </View>
 
-        {/* Restaurant List */}
+      {/* Restaurant List */}
       <ScrollView className="flex-1 px-6 py-6">
-        <Text className="mb-4 text-2xl font-bold text-gray-900">Restaurants For You</Text>
-        <View className="space-y-6">
-          {restaurants.map((restaurant, index) => (
-            <Animated.View
-              key={restaurant.id}
-              style={{
-                opacity: fadeAnims[index],
-                transform: [{ translateY: slideAnims[index] }],
-              }}
-            >
-              <TouchableOpacity
-                onPress={() => router.push(`/home/restaurant/${restaurant.id}`)}
-                activeOpacity={0.9}
-                className="mb-6"
+        <Text className="mb-4 text-2xl font-bold text-gray-900">
+          {selectedCategory === "All Filters" ? "All Restaurants" : `${selectedCategory} Restaurants`}
+        </Text>
+        {displayedRestaurants.length > 0 ? (
+          <View className="space-y-6">
+            {displayedRestaurants.map((restaurant, index) => (
+              <Animated.View
+                key={restaurant.id}
+                style={{
+                  opacity: fadeAnims[index],
+                  transform: [{ translateY: slideAnims[index] }],
+                }}
               >
-                <View className="overflow-hidden rounded-3xl bg-white shadow-sm">
-                  <View className="aspect-video overflow-hidden">
-                       <Animated.Image
-                  source={restaurant.image}
-                  className="w-full h-48"
-                  style={{
-                    opacity: fadeAnims[index],
-                    transform: [{ translateY: slideAnims[index] }],
-                  }}
-                />
-                  </View>
-                  <View className="p-4">
-                    <Text className="text-lg font-bold text-gray-900">{restaurant.name}</Text>
-                    <View className="mt-2 flex-row items-center gap-4">
-                      <View className="flex-row items-center gap-1">
-                        <Ionicons name="star" size={16} color="#f97316" />
-                        <Text className="text-sm font-medium text-gray-700">{restaurant.rating}</Text>
-                      </View>
-                      <Text className="text-sm text-gray-500">•</Text>
-                      <Text className="text-sm text-gray-500">{restaurant.time}</Text>
+                <TouchableOpacity
+                  onPress={() => router.push(`/home/restaurant/${restaurant.id}`)}
+                  activeOpacity={0.9}
+                  className="mb-6"
+                >
+                  <View className="overflow-hidden rounded-3xl bg-white shadow-sm">
+                    <View className="aspect-video overflow-hidden relative">
+                      <Animated.Image
+                        source={restaurant.image}
+                        className="w-full h-48"
+                        style={{
+                          opacity: fadeAnims[index],
+                          transform: [{ translateY: slideAnims[index] }],
+                        }}
+                      />
+                      {restaurant.offer && (
+                        <View className="absolute top-3 right-3 bg-orange-500 px-3 py-1 rounded-full">
+                          <Text className="text-white font-bold text-xs">{restaurant.offer}</Text>
+                        </View>
+                      )}
                     </View>
-                    <Text className="mt-1 text-sm text-gray-500">{restaurant.cuisine}</Text>
+                    <View className="p-4">
+                      <Text className="text-lg font-bold text-gray-900">{restaurant.name}</Text>
+                      <View className="mt-2 flex-row items-center gap-4">
+                        <View className="flex-row items-center gap-1">
+                          <Ionicons name="star" size={16} color="#f97316" />
+                          <Text className="text-sm font-medium text-gray-700">{restaurant.rating}</Text>
+                        </View>
+                        <Text className="text-sm text-gray-500">•</Text>
+                        <Text className="text-sm text-gray-500">{restaurant.time}</Text>
+                      </View>
+                      <Text className="mt-1 text-sm text-gray-500">{restaurant.cuisine}</Text>
+                    </View>
                   </View>
-                </View>
-              </TouchableOpacity>
-            </Animated.View>
-          ))}
-        </View>
+                </TouchableOpacity>
+              </Animated.View>
+            ))}
+          </View>
+        ) : (
+          <View className="flex-1 items-center justify-center py-12">
+            <Ionicons name="restaurant-outline" size={64} color="#D1D5DB" />
+            <Text className="mt-4 text-gray-500 text-center">No restaurants available in this category</Text>
+          </View>
+        )}
       </ScrollView>
     </SafeAreaView>
   )
