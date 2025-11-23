@@ -4,8 +4,16 @@ import { useLocalSearchParams, useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Ionicons from '@expo/vector-icons/build/Ionicons';
 
+type Restaurant = {
+  name: string;
+  cuisine: string;
+  rating: number;
+  time: string;
+  image: any;
+};
+
 // Restaurant data by ID
-const restaurantData = {
+const restaurantData: Record<number, Restaurant> = {
   1: {
     name: "The Great Italian Pasta",
     cuisine: "Italian Kitchen",
@@ -36,8 +44,24 @@ const restaurantData = {
   },
 };
 
+type MenuItem = {
+  id: number;
+  name: string;
+  description?: string;
+  price: number;
+  image: any;
+  soldOut?: boolean;
+};
+
+type MenuSections = {
+  appetizers: MenuItem[];
+  salad: MenuItem[];
+  main: MenuItem[];
+  desserts: MenuItem[];
+};
+
 // Menu items organized by restaurant ID and category
-const menuData = {
+const menuData: Record<number, MenuSections> = {
   1: { // Italian Restaurant
     appetizers: [
       {
@@ -274,8 +298,9 @@ export default function RestaurantDetail() {
   const restaurantId = typeof id === 'string' ? parseInt(id) : 1;
   
   const [cartCount, setCartCount] = useState(0);
-  const [activeTab, setActiveTab] = useState("main");
-  const [currentMenuItems, setCurrentMenuItems] = useState([]);
+  type TabKey = keyof MenuSections;
+  const [activeTab, setActiveTab] = useState<TabKey>("main");
+  const [currentMenuItems, setCurrentMenuItems] = useState<MenuItem[]>([]);
 
   const restaurant = restaurantData[restaurantId] || restaurantData[1];
   const restaurantMenu = menuData[restaurantId] || menuData[1];
@@ -290,7 +315,7 @@ export default function RestaurantDetail() {
 
     // Update menu items based on active tab
     setCurrentMenuItems(restaurantMenu[activeTab] || []);
-  }, [activeTab, restaurantId]);
+  }, [activeTab, restaurantId, restaurantMenu, fadeAnims, slideAnims]);
 
   useEffect(() => {
     const animations = currentMenuItems.map((_, index) =>
@@ -311,7 +336,7 @@ export default function RestaurantDetail() {
     );
 
     Animated.stagger(100, animations).start();
-  }, [currentMenuItems]);
+  }, [currentMenuItems, fadeAnims, slideAnims]);
 
   const handleAddToCart = () => {
     setCartCount((prev) => prev + 1);
