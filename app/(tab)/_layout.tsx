@@ -1,8 +1,7 @@
 import React from "react";
-import { Tabs } from "expo-router";
-import { Annoyed, HomeIcon, ShoppingBag, ShoppingCart, Sparkle } from "lucide-react-native";
+import { Tabs, useSegments } from "expo-router";
+import { Annoyed, HomeIcon, ShoppingBag, ShoppingCart } from "lucide-react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-
 
 // Define types for our tab screen configuration
 type TabBarIconProps = {
@@ -30,47 +29,69 @@ const createTabScreen = (name: string, options: TabScreenConfig["options"]) => (
 );
 
 export default function OrderTakerLayout() {
+  const segments = useSegments();
+  
+  const currentPath = segments.join('/');
+  
+  const isTabActive = (tabName: string) => {
+
+    const baseTabName = tabName.replace('/index', '');
+    
+    
+    return currentPath.startsWith(baseTabName);
+  };
+
   // Define screens that appear in the tab bar
   const tabScreens: TabScreenConfig[] = [
     {
       name: "home/index",
       options: {
         title: "Home",
-        tabBarIcon: ({ color, size }: TabBarIconProps) => <HomeIcon size={size} color={color} />
+        tabBarIcon: ({ color, size }: TabBarIconProps) => {
+          const active = isTabActive("home");
+          return <HomeIcon size={size} color={active ? "#fb923c" : color} />;
+        },
       },
     },
     {
       name: "orders/index",
       options: {
         title: "Orders",
-        tabBarIcon: ({ color, size }: TabBarIconProps) => <ShoppingBag  size={size} color={color} />,
+        tabBarIcon: ({ color, size }: TabBarIconProps) => {
+          const active = isTabActive("orders");
+          return <ShoppingBag size={size} color={active ? "#fb923c" : color} />;
+        },
       },
     },
     {
       name: "cart/index",
       options: {
         title: "Cart",
-        tabBarIcon: ({ color, size }: TabBarIconProps) => <ShoppingCart  size={size} color={color} />,
+        tabBarIcon: ({ color, size }: TabBarIconProps) => {
+          const active = isTabActive("cart");
+          return <ShoppingCart size={size} color={active ? "#fb923c" : color} />;
+        },
       },
     },
     {
       name: "profile/index",
       options: {
         title: "Profile",
-        tabBarIcon: ({ color, size }: TabBarIconProps) => <Annoyed size={size} color={color} />,
+        tabBarIcon: ({ color, size }: TabBarIconProps) => {
+          const active = isTabActive("profile");
+          return <Annoyed size={size} color={active ? "#fb923c" : color} />;
+        },
       },
     },
   ];
 
-  // Define hidden screens (not in tab bar)
+  // Define hidden screens 
   const hiddenScreens: string[] = [
     "home/restaurant/[id]",
   ];
 
   return (
-     <GestureHandlerRootView style={{ flex: 1 }}>
-      
-   
+    <GestureHandlerRootView style={{ flex: 1 }}>
       <Tabs
         screenOptions={{
           headerShown: false,
@@ -90,20 +111,28 @@ export default function OrderTakerLayout() {
           },
         }}
       >
-        {/* Render all tab bar screens */}
-        {tabScreens.map(screen => createTabScreen(screen.name, screen.options))}
+        {/* Render all tab bar screens with custom active state */}
+        {tabScreens.map(screen => {
+          const baseTabName = screen.name.replace('/index', '');
+          const isActive = isTabActive(baseTabName);
+          
+          return createTabScreen(screen.name, {
+            ...screen.options,
+            tabBarLabelStyle: {
+              color: isActive ? "#fb923c" : "#9ca3af",
+            },
+          });
+        })}
         
         {/* Render all hidden screens */}
         {hiddenScreens.map(name => createTabScreen(name, {
           href: null, 
           title: name,
           tabBarIcon: function (props: TabBarIconProps): React.ReactNode {
-            throw new Error("Function not implemented.");
-          }
+            return null;
+          },
         }))}
       </Tabs>
- 
-    
     </GestureHandlerRootView>
   );
 }
