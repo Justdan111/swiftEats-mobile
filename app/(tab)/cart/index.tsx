@@ -78,7 +78,7 @@ export default function CartScreen() {
         
       <View className="  border-gray-200 px-4 py-4  flex-row items-center">
         <TouchableOpacity onPress={() => router.back()} className="p-2 -ml-2">
-          <ArrowLeft size={20} color="#f97316" />
+          <ArrowLeft size={20} color="#000" />
         </TouchableOpacity>
         <Text className="text-2xl font-bold flex-1 text-center">My Cart</Text>
         <View className="w-9" />

@@ -130,7 +130,7 @@ const OrderTracking = () => {
           >
             <Ionicons name="arrow-back" size={24} color="#000" />
           </TouchableOpacity>
-          <Text className="text-xl font-semibold">Order Status</Text>
+          <Text className="text-xl font-bold">Order Status</Text>
           <TouchableOpacity className="p-2 -mr-2">
             <Ionicons name="ellipsis-vertical" size={24} color="#000" />
           </TouchableOpacity>
@@ -155,7 +155,7 @@ const OrderTracking = () => {
         </View>
 
         {/* Status Timeline */}
-        <View className="space-y-6 mb-8">
+        <View className="space-y-24 gap-6 mb-20">
           {orderStatuses.map((status, index) => {
             const isLast = index === orderStatuses.length - 1;
             const isCompleted = status.completed;
