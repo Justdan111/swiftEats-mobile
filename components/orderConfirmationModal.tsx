@@ -44,12 +44,23 @@ const OrderConfirmationModal = ({
 
             {/* Buttons */}
             <View className="w-full space-y-3 pt-4">
-              <TouchableOpacity onPress={() => router.push(`/orders/tracking/${orderNumber}`)} className="w-full h-12 bg-orange-500 items-center justify-center rounded-xl">
+              <TouchableOpacity
+                onPress={() => {
+                  
+                  onClose();
+                  router.push(`/orders/tracking/${orderNumber}`);
+                }}
+                className="w-full h-12 bg-orange-500 items-center justify-center rounded-xl"
+              >
                 <Text className="text-base font-semibold text-white">Track Order</Text>
               </TouchableOpacity>
-              
+
               <TouchableOpacity
-                onPress={onDone}
+                onPress={() => {
+                 
+                  onDone();
+                  router.push('/(tab)/home');
+                }}
                 className="w-full h-12 bg-gray-100 items-center justify-center rounded-xl"
               >
                 <Text className="text-base font-semibold text-gray-900">Done</Text>

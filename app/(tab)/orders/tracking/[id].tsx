@@ -122,7 +122,7 @@ const OrderTracking = () => {
       <StatusBar style="dark" />
       
       {/* Header */}
-      <View className="bg-white border-b border-gray-200 pt-12 pb-4">
+      <View className="bg-white shadow-sm border-gray-200 pb-4">
         <View className="flex-row items-center justify-between px-4">
           <TouchableOpacity
             onPress={() => router.back()}
