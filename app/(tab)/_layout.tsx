@@ -88,6 +88,7 @@ export default function OrderTakerLayout() {
   // Define hidden screens 
   const hiddenScreens: string[] = [
     "home/restaurant/[id]",
+    "orders/tracking/[id]",
   ];
 
   return (
