@@ -1,5 +1,6 @@
 import { Modal, View, Text, TouchableOpacity } from "react-native";
 import { Ionicons } from '@expo/vector-icons';
+import { router } from "expo-router";
 
 interface OrderConfirmationModalProps {
   visible: boolean;
@@ -43,7 +44,7 @@ const OrderConfirmationModal = ({
 
             {/* Buttons */}
             <View className="w-full space-y-3 pt-4">
-              <TouchableOpacity className="w-full h-12 bg-orange-500 items-center justify-center rounded-xl">
+              <TouchableOpacity onPress={() => router.push(`/orders/tracking/${orderNumber}`)} className="w-full h-12 bg-orange-500 items-center justify-center rounded-xl">
                 <Text className="text-base font-semibold text-white">Track Order</Text>
               </TouchableOpacity>
               
