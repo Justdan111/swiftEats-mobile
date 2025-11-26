@@ -2,9 +2,9 @@ import { View, Text, Image, TouchableOpacity } from 'react-native'
 import React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { ScrollView } from 'react-native-gesture-handler'
-import { ChevronRight, UserRound } from 'lucide-react-native'
+import { ChevronRight } from 'lucide-react-native'
 import { router } from 'expo-router'
-import { Ionicons } from '@expo/vector-icons'
+import { FontAwesome5, Ionicons } from '@expo/vector-icons'
 
 export default function ProfileScreen() {
 
@@ -21,8 +21,9 @@ export default function ProfileScreen() {
     {
       id: 1,
       restaurant: "Sushi World",
-      date: "2024-06-10",
+      date: "Oct 12, 2025",
       total: 45.00,
+      quantity: 4,
       items : [
         { name: "California Roll", quantity: 2 },
         { name: "Miso Soup", quantity: 1 },
@@ -33,8 +34,9 @@ export default function ProfileScreen() {
     {
       id: 2,
       restaurant: "Pizza Paradise",
-      date: "2024-06-08",
+      date: "Sep 28, 2025",
       total: 30.50,
+      quantity: 2,
       items : [
         { name: "Pepperoni Pizza", quantity: 1 },
         { name: "Garlic Bread", quantity: 1 },
@@ -65,7 +67,7 @@ export default function ProfileScreen() {
 
         {/* Account Settings */}
         <View>
-           <Text className="text-lg font-bold text-gray-900 mb-3">Account </Text>
+           <Text className="text-lg font-bold text-gray-500 mb-3">ACCOUNT</Text>
           <View className="bg-white rounded-2xl overflow-hidden shadow-sm border-b border-gray-100">
             {/* Edit Profile */}
             <TouchableOpacity
@@ -108,6 +110,76 @@ export default function ProfileScreen() {
         </View>
 
         {/* Past Orders */}
+        <View className="mt-8">
+          <Text className="text-lg font-bold text-gray-500 mb-3">PAST ORDERS</Text>
+          {pastOrders.map((order) => (
+            <View
+              key={order.id}
+              className="bg-white rounded-2xl p-4 mb-4 shadow-sm border border-gray-200"
+            >
+              <View className="flex-row items-center justify-between mb-2">
+                <Text className="font-bold text-gray-900">{order.restaurant}</Text>
+                 <Text className="font-semibold text-gray-900">Total: ${order.total.toFixed(2)}</Text>
+              </View>
+              <View className='flex-row gap-2 mb-3'> 
+                <Text className="text-gray-600 mb-2">{order.quantity} Items</Text>
+                <Text className="text-gray-600 mb-2">•</Text>
+                <Text className="text-gray-600 mb-2">{order.date}</Text>
+              </View>
+
+              <View className="flex-row gap-2">
+              <View className='flex-row gap-2 flex-1'>
+                {order.items.slice(0, 2).map((item, index) => (
+                  <Text key={index} className="text-gray-700">
+                    {item.name}
+                  </Text>
+                ))}
+                {order.items.length > 2 && (
+                  <Text className="text-gray-700">...</Text>
+                )}
+              </View>
+              <TouchableOpacity className='bg-orange-100 rounded-2xl px-3 flex-row items-center py-2 gap-2'>
+               <FontAwesome5 name="redo-alt" size={12} color="#fb923c" style={{ transform: [{ scaleX: -1 }] }} />
+                <Text className="text-orange-500 ">Reorder</Text>
+              </TouchableOpacity>
+              </View>
+             
+            </View>
+          ))}
+        </View>
+
+        {/* Settings */}
+        <View className='mt-8 gap-6'>
+          <Text className="text-lg font-bold text-gray-500 mb-3 ">SETTINGS</Text>
+
+            <View className="bg-white rounded-2xl overflow-hidden shadow-sm border-b border-gray-100">
+            {/* Edit Profile */}
+            <TouchableOpacity
+              onPress={() => router.push("/profile")}
+              className="flex-row items-center justify-between px-4 py-4 border-b border-gray-100"
+            >
+              <View className="flex-row items-center gap-4">
+                <Ionicons name="settings-outline" size={24} color="#f97316" />
+                <Text className=" font-medium text-gray-900">App Settings</Text>
+              </View>
+              <ChevronRight size={20} color="#9ca3af" />
+            </TouchableOpacity>
+          </View>
+
+          <View className="bg-white rounded-2xl overflow-hidden shadow-sm border-b border-gray-100">
+            {/* Edit Profile */}
+            <TouchableOpacity
+              onPress={() => router.push("/auth")}
+              className="flex-row items-center justify-between px-4 py-4 border-b border-gray-100"
+            >
+              <View className="flex-row items-center gap-4">
+                <Ionicons name="log-out-outline" size={24} color="#ef4444" />
+                <Text className=" font-medium text-red-500">Log Out</Text>
+              </View>
+             
+            </TouchableOpacity>
+          </View>
+        </View>
 
 
       </ScrollView>
