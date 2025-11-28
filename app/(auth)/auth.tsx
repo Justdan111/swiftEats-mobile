@@ -16,15 +16,15 @@ const Auth = () => {
   return (
     < SafeAreaView className="flex-1 bg-white">
       <StatusBar style="dark" />
-      <View className="px-6 py-8">
+      <View className="px-6 py-8 justify-between flex-1">
         <View className="mx-auto w-full max-w-md space-y-8">
           <View className="text-center items-center mb-8">
             <Text className="mb-2 text-5xl font-black text-gray-900">SwiftEats</Text>
             <Text className="text-base text-gray-600">Your next meal, delivered.</Text>
           </View>
 
-          <View className="w-full mb-6">
-            <View className="flex-row w-full bg-gray-100 rounded-2xl p-1">
+          <View className="w-full mb-6 ">
+            <View className="flex-row w-full bg-gray-100 rounded-2xl p-1 mb-6">
               <TouchableOpacity
                 className={`flex-1 py-3 rounded-xl ${!isSignUp ? 'bg-white' : 'bg-transparent'}`}
                 onPress={() => setIsSignUp(false)}
@@ -46,7 +46,7 @@ const Auth = () => {
             </View>
 
             {isSignUp ? (
-              <View className="mt-6 space-y-4">
+              <View className="mt-6 space-y-9">
                 <View className="relative mb-4">
                   <View className="absolute left-4 top-1/2 z-10" style={{ transform: [{ translateY: -10 }] }}>
                     <Ionicons name="person-outline" size={20} color="#6B7280" />
@@ -128,8 +128,9 @@ const Auth = () => {
               </View>
             )}
           </View>
+           </View>
 
-          <View className="space-y-4 mb-6">
+          {/* <View className="space-y-4 mb-6">
             <View className="relative">
               <View className="absolute inset-0 flex items-center justify-center">
                 <View className="w-full border-t border-gray-300" />
@@ -153,16 +154,16 @@ const Auth = () => {
                <FontAwesome name="apple" size={20} color="#000" />
               <Text className="ml-2 text-base font-medium text-gray-900">Continue with Apple</Text>
             </TouchableOpacity>
-          </View>
+          </View> */}
 
-          <View className="items-center mb-8">
+          <View className="items-center mb-8  ">
             <Text className="text-center text-xs text-gray-600">
               By continuing, you agree to our{" "}
               <Text className="text-orange-500">Terms of Service</Text> &{" "}
               <Text className="text-orange-500">Privacy Policy</Text>.
             </Text>
           </View>
-        </View>
+       
       </View>
     </SafeAreaView>
   );
