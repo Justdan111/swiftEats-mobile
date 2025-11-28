@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { View, Text, TextInput, TouchableOpacity } from "react-native";
 import { StatusBar } from "expo-status-bar";
-import { Ionicons, MaterialIcons, AntDesign, FontAwesome } from '@expo/vector-icons';
+import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useRouter } from "expo-router"
 
