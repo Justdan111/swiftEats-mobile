@@ -71,8 +71,6 @@ export default function CartScreen() {
   };
 
 
-
-
   return (
     <SafeAreaView className='flex-1 bg-gray-100 '>
         
